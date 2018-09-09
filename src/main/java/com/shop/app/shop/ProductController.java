@@ -18,24 +18,46 @@ public class ProductController {
     }
 
 
-    @GetMapping("/spozywcze.html")
+    @GetMapping("/lista")
     @ResponseBody
-    public String getAll() {
+    public String getAll(@RequestParam(value = "kategoria", required = false) String category) {
         String result = "";
-        String category_name = String.valueOf(Category.CATEGORY_1.description);
-        repositoryProducts.getCategory(Category.CATEGORY_1);
-            ArrayList<Product> products = repositoryProducts.products;
-            {
-                for (Product product : products) {
+        double sum = 0;
+        ArrayList<Product> products = repositoryProducts.products;
+        {
+            for (Product product : products) {
+                String categoryName = String.valueOf(product.getCategory());
+
+
+                if (category == null || categoryName == category) {
                     result += product.toString() + "<br>";
                 }
+                sum += product.getPrice();
+
+            }
         }
-        return result;
+        return result + " " + sum;
     }
 
-
+    @GetMapping("/lista?kategoria=spozywcze")
+    @ResponseBody
+    public String getSpozywcze(@RequestParam(value = "kategoria") String category) {
+        String result = "";
+        double sum = 0;
+        ArrayList<Product> products = repositoryProducts.products;
+        {
+            for (Product product : products) {
+                String categoryName = "spozywcze";
+                if (category.equals("spozywcze")) {
+                    result += product.toString() + "<br>";
+                }
+                sum += product.getPrice();
+            }
+        }
+        return result + " " + sum;
+    }
     @PostMapping("/add")
-    public String addNewProduct(@RequestParam String name, @RequestParam Double price, @RequestParam Category category) {
+    public String addNewProduct(@RequestParam String name, @RequestParam double price, @RequestParam String category) {
 
         repositoryProducts.add(new Product(name, price, category));
         return "redirect:/products";

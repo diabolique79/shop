@@ -2,11 +2,11 @@ package com.shop.app.shop;
 
 public enum Category {
 
-    CATEGORY_1("Art. spożywcze"),
+    SPOZYWCZE("Art. spożywcze"),
 
-    CATEGORY_2("Art. gosp. domowego"),
+    DOMOWE("Art. gosp. domowego"),
 
-    CATEGORY_3("Inne");
+    INNE("Inne");
 
     public final String description;
 
