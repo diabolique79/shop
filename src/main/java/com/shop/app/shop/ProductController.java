@@ -21,45 +21,29 @@ public class ProductController {
     @GetMapping("/lista")
     @ResponseBody
     public String getAll(@RequestParam(value = "kategoria", required = false) String category) {
+
         String result = "";
         double sum = 0;
-        ArrayList<Product> products = repositoryProducts.products;
+        ArrayList<Product> products = repositoryProducts.getProducts();
         {
             for (Product product : products) {
-                String categoryName = String.valueOf(product.getCategory());
 
-
-                if (category == null || categoryName == category) {
+                if (category == null || product.getCategory().equals(category)) {
                     result += product.toString() + "<br>";
+                    sum += product.getPrice();
                 }
-                sum += product.getPrice();
 
             }
-        }
-        return result + " " + sum;
+        }result += "Cena: " + sum + " zł";
+
+
+        return result;
     }
 
-    @GetMapping("/lista?kategoria=spozywcze")
-    @ResponseBody
-    public String getSpozywcze(@RequestParam(value = "kategoria") String category) {
-        String result = "";
-        double sum = 0;
-        ArrayList<Product> products = repositoryProducts.products;
-        {
-            for (Product product : products) {
-                String categoryName = "spozywcze";
-                if (category.equals("spozywcze")) {
-                    result += product.toString() + "<br>";
-                }
-                sum += product.getPrice();
-            }
-        }
-        return result + " " + sum;
-    }
+
     @PostMapping("/add")
     public String addNewProduct(@RequestParam String name, @RequestParam double price, @RequestParam String category) {
-
         repositoryProducts.add(new Product(name, price, category));
-        return "redirect:/products";
+        return "redirect:/lista";
     }
 }

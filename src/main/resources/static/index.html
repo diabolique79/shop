@@ -8,7 +8,19 @@
 <a href="http://localhost:8080/lista">Wszystkie produkty</a><br>
 <a href="http://localhost:8080/lista?kategoria=spozywcze">Produkty Spożywcze</a><br>
 <a href="http://localhost:8080/lista?kategoria=inne">Inne Produkty</a><br>
-<a href="http://localhost:8080/lista?kategoria=domowe">Domowe Produkty</a><br>
+<a href="http://localhost:8080/lista?kategoria=domowe">Domowe Produkty</a><br><br>
+
+
+<form action="/add" method="post">
+    <input type = "text" name="name" placeholder="Nazwa produktu"><br>
+    <input type = "number" step="any" name="price" placeholder="Cena produktu"><br>
+    <br>
+    <select name = "category" size="2">
+        <option value="spozywcze"> Spożywcze</option>
+        <option value="domowe">Domowe</option>
+        <option value="inne">Inne</option>
+        <div><input type="submit" value="Dodaj produkt"></div>
+        </select></form>
 
 </body>
 </html>
